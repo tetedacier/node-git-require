@@ -60,6 +60,10 @@
           "description": "A new bugix based on the master branch",
           "title": "Hotfix"
         },
+        "test": {
+          "description": "Test dutties",
+          "title": "dev"
+        },
         "develop": {
           "description": "Initiate a new development flow",
           "title": "dev"
