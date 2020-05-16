@@ -5,7 +5,8 @@
   "main": "src/gitModule.js",
   "scripts": {
     "test": "tap --100",
-    "commit": "git-cz"
+    "commit": "git-cz",
+    "coverage": "nyc report --reporter=html"
   },
   "homepage": "https://tetedacier/node-git-require",
   "repository": {
