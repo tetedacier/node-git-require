@@ -3,7 +3,9 @@
  * @file Provide ability to require git resources as async node dependencies
  */
 
-/**
+const path = require('path')
+
+ /**
  *
  * @typedef HashExtractionResult filename
  * @type {object}
@@ -41,9 +43,9 @@ function extractHash (filename) {
  * @param {string} filename - original path required
  * @return {string} - Promise wrapper of the git dependency to be compiled
  */
-const wrapper = (repositoryPath, repositoryVersion, filename) =>
+const wrapper = (repositoryPath, repositoryVersion, filename, gitFsModulePrefix) =>
 `module.exports = new Promise((resolve, reject) => {
-    const gitFsRead = require('loaders/gitFs')
+    const gitFsRead = require('${gitFsModulePrefix}/gitFs')
     gitFsRead('${repositoryPath}.js', '${repositoryVersion}').then(
         (content) => {
             const Module = require('module')
@@ -73,15 +75,28 @@ function loadGitHash (module, filename) {
         repositoryVersion
     } = extractHash(filename)
 
+    const gitFsModulePrefix = (__dirname === module.parent.path)
+        ? `${process.cwd()}/src`
+        : 'git-require/src'
+
     // below make the assumtion your versionned file contains common js code
     // else chaos will ensue
     if (result === null) {
         throw new Error('no content found')
     }
-    module._compile(wrapper(repositoryPath, repositoryVersion, filename), filename)
+    module._compile(
+        wrapper(
+            (__dirname === module.parent.path)
+                ? path.resolve(__dirname, repositoryPath)
+                : repositoryPath,
+            repositoryVersion,
+            filename,
+            gitFsModulePrefix
+        ),
+        filename
+    )
 };
 const exposeGitFileType = () => {
-
     const Module = require('module')
     moduleResolveFilename = Module._resolveFilename
     Module._resolveFilename = (request, parent, isMain, options) => {
