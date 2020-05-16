@@ -3,6 +3,9 @@
  */
 const { spawn } = require('child_process');
 
+const noPathAtCurrentVersion = (fileName, version) => `No path '${fileName}' at version '${version}' in current git repository`
+const folderNotSupported = (fileName, version) => `Multiple path in '${fileName}' at version '${version}' in current git repository, folder dependencies are not currently supported`
+const currentObjectTypeIsNotSupported = (type, path) => `Current object type (${type}) of '${path}' is not a blob and therefore not supported`
 /**
  * @typedef CommitDetailsParameter
  * @type {object}
@@ -34,23 +37,19 @@ const gitShowCommitDetails = ({version, fileName}) => Object.assign({
                 contentHash,
                 name
             ] = lines[0].split(/\s+/)
-            if(contentHash) {
+
+            if(type === 'blob') {
                 return resolve({ contentHash })
             }
-            reject(new Error(`Can't find contentHash in given output '${lines[0]}'`))
 
-            reject({
-                mode,
-                type,
-                contentHash,
-                name
-            })
+            return reject(new Error(currentObjectTypeIsNotSupported(type,name)))
         }
+
         if (lines.length === 0) {
-            reject(new Error(`No path '${fileName}' at version '${version}' in current git repository`))
+            reject(new Error(noPathAtCurrentVersion(fileName, version)))
         }
         //@TODO: implement index detection on folder and recursive filesystem version extraction
-        reject(new Error(`Multiple path in '${fileName}' at version '${version}' in current git repository, folder dependencies are not currently supported`))
+        reject(new Error(folderNotSupported(fileName, version)))
     })
 })
 /**
@@ -111,3 +110,6 @@ const extractGitFile = (fileName, version) => chain(
 )
 
 module.exports = extractGitFile
+module.exports.noPathAtCurrentVersion = noPathAtCurrentVersion
+module.exports.folderNotSupported = folderNotSupported
+module.exports.currentObjectTypeIsNotSupported = currentObjectTypeIsNotSupported
