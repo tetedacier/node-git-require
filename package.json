@@ -37,6 +37,10 @@
       "defaultBody": "",
       "defaultIssues": "",
       "types": {
+        "package": {
+          "description": "General package management duties",
+          "title": "pack"
+        },
         "release": {
           "description": "Tasks releted to releases flow",
           "title": "Release"
@@ -63,7 +67,7 @@
         },
         "test": {
           "description": "Test dutties",
-          "title": "dev"
+          "title": "test"
         },
         "develop": {
           "description": "Initiate a new development flow",
