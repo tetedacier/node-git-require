@@ -73,7 +73,7 @@ function loadGitHash (module, filename) {
         repositoryVersion
     } = extractHash(filename)
 
-    // below make a the assumtion you're versionned file contains common js code
+    // below make the assumtion your versionned file contains common js code
     // else chaos will ensue
     if (result === null) {
         throw new Error('no content found')
