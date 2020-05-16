@@ -62,6 +62,8 @@ const wrapper = (repositoryPath, repositoryVersion, filename, gitFsModulePrefix)
 })
 `
 
+
+const incorrectModuleName = (filename) => `Incorrect naming scheme for ${filename}`
 /**
  * @description Extract path and version from git dependency and
  * @param {string} module
@@ -75,15 +77,16 @@ function loadGitHash (module, filename) {
         repositoryVersion
     } = extractHash(filename)
 
+    if (result === null) {
+        throw new Error(incorrectModuleName(filename))
+    }
+
     const gitFsModulePrefix = (__dirname === module.parent.path)
         ? `${process.cwd()}/src`
         : 'git-require/src'
 
     // below make the assumtion your versionned file contains common js code
     // else chaos will ensue
-    if (result === null) {
-        throw new Error('no content found')
-    }
     module._compile(
         wrapper(
             (__dirname === module.parent.path)
@@ -108,6 +111,10 @@ const exposeGitFileType = () => {
     Module._extensions['.git'] = loadGitHash;
 }
 
-module.exports = exposeGitFileType
+module.exports = {
+    message:{
+        incorrectModuleName
+    }
+}
 
 exposeGitFileType()
