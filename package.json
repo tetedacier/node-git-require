@@ -1,6 +1,6 @@
 {
   "name": "git-require",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "",
   "main": "src/gitModule.js",
   "scripts": {
@@ -51,6 +51,10 @@
         "hotfix": {
           "description": "A new bugix based on the master branch",
           "title": "Hotfix"
+        },
+        "develop": {
+          "description": "Initiate a new development flow",
+          "title": "dev"
         }
       }
     }
