@@ -56,7 +56,7 @@ const wrapper = (repositoryPath, repositoryVersion, filename, gitFsModulePrefix)
             return resolve(require('${filename}-resolved'))
         },
         error => {
-            throw new Error(error)
+            reject(error)
         }
     )
 })
