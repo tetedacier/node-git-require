@@ -6,7 +6,11 @@
 
  */
 function arrayStringify (array, separator = '') {
-    return array.join(separator)
+    let returnedString = '';
+    for (let item of array) {
+        returnedString += String(item) + String(separator)
+    }
+    return returnedString
 }
 
 module.exports = arrayStringify
