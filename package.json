@@ -40,6 +40,10 @@
           "description": "Tasks releted to releases flow",
           "title": "Release"
         },
+        "flow": {
+          "description": "Update in the project overall workflow",
+          "title": "Flow"
+        },
         "feat": {
           "description": "A new feature based on the develop branch",
           "title": "Features"
@@ -49,7 +53,7 @@
           "title": "Bugfix"
         },
         "doc": {
-          "description": "Enhance documentation",
+          "description": "Enhance or update documentation",
           "title": "Doc"
         },
         "hotfix": {
