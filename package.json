@@ -1,6 +1,6 @@
 {
   "name": "git-require",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "",
   "main": "src/gitModule.js",
   "scripts": {
@@ -36,6 +36,10 @@
       "defaultBody": "",
       "defaultIssues": "",
       "types": {
+        "release": {
+          "description": "Tasks releted to releases flow",
+          "title": "Release"
+        },
         "feat": {
           "description": "A new feature based on the develop branch",
           "title": "Features"
@@ -51,6 +55,10 @@
         "hotfix": {
           "description": "A new bugix based on the master branch",
           "title": "Hotfix"
+        },
+        "develop": {
+          "description": "Initiate a new development flow",
+          "title": "dev"
         }
       }
     }
