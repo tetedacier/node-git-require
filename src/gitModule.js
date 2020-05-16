@@ -87,7 +87,7 @@ function loadGitHash (module, filename) {
     module._compile(
         wrapper(
             (__dirname === module.parent.path)
-                ? path.resolve(__dirname, repositoryPath)
+                ? path.resolve(__dirname, repositoryPath).replace(process.cwd(), '.')
                 : repositoryPath,
             repositoryVersion,
             filename,
