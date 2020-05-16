@@ -37,7 +37,7 @@ Moreover this module needs git to be installed, but there's a a lot of chance th
 This package makes use of the `commitizen` and `husky` packages, see [how to install it on you project and how to use it](https://github.com/commitizen/cz-cli).
 
 ## Roadmap
-See [the roadmap document](./ROADMAP) to see all the things which needs to be done to consider this module as anything else but a proof of concept.
+All the roadmap for this project is handled in [the dedicated github's projects page](https://github.com/tetedacier/node-git-require/projects)
 
 ## Warnings
 One of the strongest limitation of this module is that when loaded scripts at a given version could require other files from its related tree.
@@ -46,4 +46,4 @@ Those files may not exist at the current point of history of the working folder,
 
 Same is true for the package dependencies.
 
-All those limitation has been clearly identified, planned in the [roadmap document](./ROADMAP.md) and may be addressed or not in future versions.
+All those limitation has been clearly identified, defined in [the project's roadmap](https://github.com/tetedacier/node-git-require/projects) and may be addressed or not in future versions.
