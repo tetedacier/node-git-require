@@ -1,0 +1,63 @@
+{
+  "name": "git-require",
+  "version": "0.1.0",
+  "description": "",
+  "main": "src/gitModule.js",
+  "scripts": {
+    "test": "tap --100",
+    "commit": "git-cz"
+  },
+  "homepage": "https://tetedacier/node-git-require",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:tetedacier/node-git-require.git"
+  },
+  "keywords": [
+    "git",
+    "loader",
+    "require"
+  ],
+  "author": "tetedacier<me@fabien-jacq.name>(https://tetedacier.github.io)",
+  "license": "ISC",
+  "devDependencies": {
+    "commitizen": "^4.1.2",
+    "cz-conventional-changelog": "^3.2.0",
+    "husky": "^4.2.5",
+    "tap": "latest"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog",
+      "maxHeaderWidth": 100,
+      "maxLineWidth": 100,
+      "defaultType": "",
+      "defaultScope": "",
+      "defaultSubject": "",
+      "defaultBody": "",
+      "defaultIssues": "",
+      "types": {
+        "feat": {
+          "description": "A new feature based on the develop branch",
+          "title": "Features"
+        },
+        "bugfix": {
+          "description": "A new bugix based on the develop branch",
+          "title": "Bugfix"
+        },
+        "doc": {
+          "description": "Enhance documentation",
+          "title": "Doc"
+        },
+        "hotfix": {
+          "description": "A new bugix based on the master branch",
+          "title": "Hotfix"
+        }
+      }
+    }
+  },
+  "husky": {
+    "hooks": {
+      "prepare-commit-msg": "exec < /dev/tty && git cz --hook || true"
+    }
+  }
+}
