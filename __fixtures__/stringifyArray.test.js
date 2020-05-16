@@ -4,12 +4,19 @@
 
 const tap = require('tap')
 const expectedOutput = '[object Object]-test-true-undefined-lemon-'
-
+const expectedOutputWithoutSeparator = '[object Object]testtrueundefinedlemon'
+const testedArray = [{a:1}, 'test', true, undefined, ['lemon']]
 tap.test('stringifyArray correctly export a broken method', (t)=> {
     const testedModule = require('./stringifyArray')
     t.equal(
-        testedModule([{a:1}, 'test', true, undefined, ['lemon']], '-'),
+        testedModule(testedArray, '-'),
         expectedOutput
     )
+
+    t.equal(
+        testedModule(testedArray),
+        expectedOutputWithoutSeparator
+    )
+
     t.end()
 })
