@@ -43,9 +43,9 @@ function extractHash (filename) {
  * @param {string} filename - original path required
  * @return {string} - Promise wrapper of the git dependency to be compiled
  */
-const wrapper = (repositoryPath, repositoryVersion, filename, gitFsModulePrefix) =>
+const wrapper = (repositoryPath, repositoryVersion, filename, packageDirname) =>
 `module.exports = new Promise((resolve, reject) => {
-    const gitFsRead = require('${gitFsModulePrefix}/gitFs')
+    const gitFsRead = require('${packageDirname}/gitFs')
     gitFsRead('${repositoryPath}.js', '${repositoryVersion}').then(
         (content) => {
             const Module = require('module')
@@ -81,20 +81,14 @@ function loadGitHash (module, filename) {
         throw new Error(incorrectModuleName(filename))
     }
 
-    const gitFsModulePrefix = (__dirname === module.parent.path)
-        ? `${process.cwd()}/src`
-        : 'git-require/src'
-
-    // below make the assumtion your versionned file contains common js code
-    // else chaos will ensue
+    // below make the assumption your versionned file contains common js code
+    // transpilation will be taken care of whith source map support
     module._compile(
         wrapper(
-            (__dirname === module.parent.path)
-                ? path.resolve(__dirname, repositoryPath).replace(process.cwd(), '.')
-                : repositoryPath,
+            path.resolve(module.parent.path, repositoryPath).replace(process.cwd(), '.'),
             repositoryVersion,
             filename,
-            gitFsModulePrefix
+            __dirname
         ),
         filename
     )
