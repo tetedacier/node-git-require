@@ -1,7 +1,7 @@
 
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
-# git dependency loader
+# git-loader
 This module provide the ability to require a commonjs module at a given version in the repository history.
 
 This may be usefull to monitor performance enhancement during a refactor or avoiding the use of submodule pointing at other branch of the same repository.
@@ -9,10 +9,10 @@ This may be usefull to monitor performance enhancement during a refactor or avoi
 [`git bisect`](https://git-scm.com/docs/git-bisect) command can provide the same kind of feature, but I wanted to play with git and module override.
 
 ## Usage
-This module **must** be installed as a devDependencies since it **won't** and **should'nt** be of any use on production servers. Which means you should install it using `npm install --save-dev git-require` and use it in `ci` or `local` environment like this
+This module **must** be installed as a devDependencies since it **won't** and **should'nt** be of any use on production servers. Which means you should install it using `npm install --save-dev git-loader` and use it in `ci` or `local` environment like this
 
 ```javascript
-require('git-require')
+require('git-loader')
 const previousVersionOfModuleA = './A#previous-tag.git'
 const currentVersionOfModuleA = './A'
 
@@ -20,7 +20,7 @@ const currentVersionOfModuleA = './A'
 
 ```
 
-You can also run the same using `node -r git-require perf.js` where `perf.js` looks like
+You can also run the same using `node -r git-loader perf.js` where `perf.js` looks like
 
 ```javascript
 const previousVersionOfModuleA = './A#previous-tag.git'
@@ -46,4 +46,4 @@ Those modules may not exist at the current point of history of the working folde
 
 Same is true for the dependencies defined in your package files.
 
-All those limitation has been clearly identified, defined in [the project's roadmap](https://github.com/tetedacier/node-git-require/projects) and may be addressed or not in future versions.
+All those limitation has been clearly identified and may be addressed or not in future versions.
