@@ -6,10 +6,10 @@ This module provide the ability to require a commonjs module at a given version 
 
 This may be usefull to monitor performance enhancement during a refactor or avoiding the use of submodule pointing at other branch of the same repository.
 
-`git bisect` command may have provided the same kind of feature, but I wanted an easy way to do it.
+[`git bisect`](https://git-scm.com/docs/git-bisect) command can provide the same kind of feature, but I wanted to play with git and module override.
 
 ## Usage
-This module must be installed as devDependencies since deploying using git is not a recommanded way of deploying apps. Which means you shoudld install it using `npm install --save-dev git-require` and use it as
+This module **must** be installed as a devDependencies since it **won't** and **should'nt** be of any use on production servers. Which means you should install it using `npm install --save-dev git-require` and use it in `ci` or `local` environment like this
 
 ```javascript
 require('git-require')
@@ -30,20 +30,20 @@ const currentVersionOfModuleA = './A'
 
 ```
 
-
-Moreover this module needs git to be installed, but there's a a lot of chance this may be the case, since it's one of the npm requirement to enable usage of git dependencies.
+Moreover this module needs git to be installed in the environment you will on which you will use it, but there's a a lot of chance this may be the case, since it seems to be one of the npm requirement to enable some of its feature like [git dependencies](https://docs.npmjs.com/files/package.json#git-urls-as-dependencies).
+(note for myself, I may have use the [npm's internal git lib](https://github.com/npm/cli/blob/latest/lib/utils/git.js) instead of writing [my own](./src/gitFs.js) ...)
 
 ## Tooling and commit on this project
 This package makes use of the `commitizen` and `husky` packages, see [how to install it on you project and how to use it](https://github.com/commitizen/cz-cli).
 
 ## Roadmap
-All the roadmap for this project is handled in [the dedicated github's projects page](https://github.com/tetedacier/node-git-require/projects)
+All the roadmap for this project is handled using github features like [the github's projects page](https://github.com/tetedacier/node-git-require/projects), milestone, issues ... to be honest I'm still wondering what will be the most efficient way of handling it.
 
 ## Warnings
-One of the strongest limitation of this module is that when loaded scripts at a given version could require other files from its related tree.
+One of the strongest limitation of this module is that when a scripts is loaded at a given version, it could require other modules which exists in your project at this specific revision.
 
-Those files may not exist at the current point of history of the working folder, exports of the required stuff may have differents signature.
+Those modules may not exist at the current point of history of the working folder and even if they still exists they may exports a different signature.
 
-Same is true for the package dependencies.
+Same is true for the dependencies defined in your package files.
 
 All those limitation has been clearly identified, defined in [the project's roadmap](https://github.com/tetedacier/node-git-require/projects) and may be addressed or not in future versions.
