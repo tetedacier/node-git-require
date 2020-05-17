@@ -3,6 +3,9 @@
   "version": "0.1.1",
   "description": "",
   "main": "src/gitModule.js",
+  "bugs": {
+    "url": "https://github.com/tetedacier/node-git-require/issues"
+  },
   "scripts": {
     "test": "tap --100",
     "commit": "git-cz",
