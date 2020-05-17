@@ -5,7 +5,8 @@
   "main": "src/gitModule.js",
   "scripts": {
     "test": "tap --100",
-    "commit": "git-cz"
+    "commit": "git-cz",
+    "coverage": "nyc report --reporter=html"
   },
   "homepage": "https://tetedacier/node-git-require",
   "repository": {
@@ -36,6 +37,10 @@
       "defaultBody": "",
       "defaultIssues": "",
       "types": {
+        "package": {
+          "description": "General package management duties",
+          "title": "pack"
+        },
         "release": {
           "description": "Tasks releted to releases flow",
           "title": "Release"
@@ -59,6 +64,10 @@
         "hotfix": {
           "description": "A new bugix based on the master branch",
           "title": "Hotfix"
+        },
+        "test": {
+          "description": "Test dutties",
+          "title": "test"
         },
         "develop": {
           "description": "Initiate a new development flow",
