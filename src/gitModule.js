@@ -3,7 +3,9 @@
  * @file Provide ability to require git resources as async node dependencies
  */
 
-/**
+const path = require('path')
+
+ /**
  *
  * @typedef HashExtractionResult filename
  * @type {object}
@@ -41,9 +43,9 @@ function extractHash (filename) {
  * @param {string} filename - original path required
  * @return {string} - Promise wrapper of the git dependency to be compiled
  */
-const wrapper = (repositoryPath, repositoryVersion, filename) =>
+const wrapper = (repositoryPath, repositoryVersion, filename, packageDirname) =>
 `module.exports = new Promise((resolve, reject) => {
-    const gitFsRead = require('loaders/gitFs')
+    const gitFsRead = require('${packageDirname}/gitFs')
     gitFsRead('${repositoryPath}.js', '${repositoryVersion}').then(
         (content) => {
             const Module = require('module')
@@ -54,12 +56,14 @@ const wrapper = (repositoryPath, repositoryVersion, filename) =>
             return resolve(require('${filename}-resolved'))
         },
         error => {
-            throw new Error(error)
+            reject(error)
         }
     )
 })
 `
 
+
+const incorrectModuleName = (filename) => `Incorrect naming scheme for ${filename}`
 /**
  * @description Extract path and version from git dependency and
  * @param {string} module
@@ -73,15 +77,23 @@ function loadGitHash (module, filename) {
         repositoryVersion
     } = extractHash(filename)
 
-    // below make a the assumtion you're versionned file contains common js code
-    // else chaos will ensue
     if (result === null) {
-        throw new Error('no content found')
+        throw new Error(incorrectModuleName(filename))
     }
-    module._compile(wrapper(repositoryPath, repositoryVersion, filename), filename)
+
+    // below make the assumption your versionned file contains common js code
+    // transpilation will be taken care of whith source map support
+    module._compile(
+        wrapper(
+            path.resolve(module.parent.path, repositoryPath).replace(process.cwd(), '.'),
+            repositoryVersion,
+            filename,
+            __dirname
+        ),
+        filename
+    )
 };
 const exposeGitFileType = () => {
-
     const Module = require('module')
     moduleResolveFilename = Module._resolveFilename
     Module._resolveFilename = (request, parent, isMain, options) => {
@@ -93,6 +105,10 @@ const exposeGitFileType = () => {
     Module._extensions['.git'] = loadGitHash;
 }
 
-module.exports = exposeGitFileType
+module.exports = {
+    message:{
+        incorrectModuleName
+    }
+}
 
 exposeGitFileType()

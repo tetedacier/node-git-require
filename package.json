@@ -1,11 +1,15 @@
 {
   "name": "git-require",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "",
   "main": "src/gitModule.js",
+  "bugs": {
+    "url": "https://github.com/tetedacier/node-git-require/issues"
+  },
   "scripts": {
     "test": "tap --100",
-    "commit": "git-cz"
+    "commit": "git-cz",
+    "coverage": "nyc report --reporter=html"
   },
   "homepage": "https://tetedacier/node-git-require",
   "repository": {
@@ -36,9 +40,17 @@
       "defaultBody": "",
       "defaultIssues": "",
       "types": {
+        "package": {
+          "description": "General package management duties",
+          "title": "pack"
+        },
         "release": {
           "description": "Tasks releted to releases flow",
           "title": "Release"
+        },
+        "flow": {
+          "description": "Update in the project overall workflow",
+          "title": "Flow"
         },
         "feat": {
           "description": "A new feature based on the develop branch",
@@ -49,12 +61,16 @@
           "title": "Bugfix"
         },
         "doc": {
-          "description": "Enhance documentation",
+          "description": "Enhance or update documentation",
           "title": "Doc"
         },
         "hotfix": {
           "description": "A new bugix based on the master branch",
           "title": "Hotfix"
+        },
+        "test": {
+          "description": "Test dutties",
+          "title": "test"
         },
         "develop": {
           "description": "Initiate a new development flow",
