@@ -6,6 +6,7 @@ const { spawn } = require('child_process');
 const noPathAtCurrentVersion = (fileName, version) => `No path '${fileName}' at version '${version}' in current git repository`
 const folderNotSupported = (fileName, version) => `Multiple path in '${fileName}' at version '${version}' in current git repository, folder dependencies are not currently supported`
 const currentObjectTypeIsNotSupported = (type, path) => `Current object type (${type}) of '${path}' is not a blob and therefore not supported`
+const gitLsTreeNotValidObjecNameError = (commitHash) => `fatal: Not a valid object name ${commitHash}\n`
 /**
  * @typedef CommitDetailsParameter
  * @type {object}
@@ -111,3 +112,4 @@ module.exports = extractGitFile
 module.exports.noPathAtCurrentVersion = noPathAtCurrentVersion
 module.exports.folderNotSupported = folderNotSupported
 module.exports.currentObjectTypeIsNotSupported = currentObjectTypeIsNotSupported
+module.exports.gitLsTreeNotValidObjecNameError = gitLsTreeNotValidObjecNameError

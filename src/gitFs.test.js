@@ -54,3 +54,21 @@ tap.test('gitFs should failed to resolve a non existing file', async (t) => {
         t.end()
     }
 })
+
+tap.test('gitFs should failed to resolve if given commitHash does not exists', async (t) => {
+    const invalidObjectName = '1234567'
+    try {
+        await gitFs(`__fixtures__/`, invalidObjectName)
+    }
+    catch (error){
+        t.equal(
+            error.constructor.name,
+            'Error'
+        )
+        t.equal(
+            error.message,
+            gitFs.gitLsTreeNotValidObjecNameError(invalidObjectName)
+        )
+        t.end()
+    }
+})
