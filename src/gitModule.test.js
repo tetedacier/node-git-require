@@ -42,14 +42,13 @@ tap.test('gitModule should failed to require a non resolved file', async (t) => 
         await require(`../${basePath}#${commitHash}.git`)
     }
     catch (error){
-        console.warn(error)
         t.equal(
             error.constructor.name,
             'Error'
         )
         t.equal(
             error.message,
-            `Error: ${gitFs.noPathAtCurrentVersion(`./${basePath}.js`, commitHash)}`
+            gitFs.noPathAtCurrentVersion(`./${basePath}.js`, commitHash)
         )
         t.end()
     }

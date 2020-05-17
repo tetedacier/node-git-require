@@ -46,7 +46,7 @@ const gitShowCommitDetails = ({version, fileName}) => Object.assign({
         }
 
         if (lines.length === 0) {
-            reject(new Error(noPathAtCurrentVersion(fileName, version)))
+            return reject(new Error(noPathAtCurrentVersion(fileName, version)))
         }
         //@TODO: implement index detection on folder and recursive filesystem version extraction
         reject(new Error(folderNotSupported(fileName, version)))
@@ -88,7 +88,7 @@ const chain = ({command, extraction}) => new Promise(function resolveExecution(r
         if(code === 0) {
             return resolve(extraction(stdout))
         }
-        reject(stderr)
+        return reject(new Error(stderr))
     })
 
     command.on('exit', (code) => {})
@@ -104,9 +104,7 @@ const extractGitFile = (fileName, version) => chain(
     gitShowCommitDetails({fileName, version})
 ).then(
     resolution => chain(gitCatFile(resolution)),
-    rejection => {
-        throw new Error(rejection)
-    }
+    rejection => Promise.reject(rejection)
 )
 
 module.exports = extractGitFile

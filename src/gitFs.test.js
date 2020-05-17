@@ -14,7 +14,7 @@ tap.test('gitFs should failed to resolve a folder', async(t) => {
         )
         t.equal(
             error.message,
-            `Error: ${gitFs.folderNotSupported('__fixtures__/', 'HEAD')}`
+            gitFs.folderNotSupported('__fixtures__/', 'HEAD')
         )
         t.end()
     }
@@ -31,7 +31,7 @@ tap.test('gitFs should failed to resolve a folder', async(t) => {
         )
         t.equal(
             error.message,
-            `Error: ${gitFs.currentObjectTypeIsNotSupported('tree', '__fixtures__')}`
+            gitFs.currentObjectTypeIsNotSupported('tree', '__fixtures__')
         )
         t.end()
     }
@@ -49,7 +49,7 @@ tap.test('gitFs should failed to resolve a non existing file', async (t) => {
         )
         t.equal(
             error.message,
-            `Error: ${gitFs.noPathAtCurrentVersion(`${basePath}.js`, commitHash)}`
+            gitFs.noPathAtCurrentVersion(`${basePath}.js`, commitHash)
         )
         t.end()
     }
